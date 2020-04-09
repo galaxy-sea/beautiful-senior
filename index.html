@@ -280,6 +280,23 @@
 			}
 		}
 
+		$(function(){
+			console.log(commonDivisor(7,3));
+		})
+
+		function commonDivisor(num1, num2) {
+			if ((num1 - num2) < 0) {
+				var data = num1;
+				num1 = num2;
+				num2 = data;
+			}
+			while (num2 != 0) {
+				var remainder = num1 % num2;
+				num1 = num2;
+				num2 = remainder;
+			}
+			return num1;
+		}
 	</script>
 </body>
 
