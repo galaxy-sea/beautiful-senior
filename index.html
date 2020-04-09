@@ -97,6 +97,13 @@
 									$next.show();
 									//get a random animation
 									randomAnimation($current, $next, $area);
+									var theImage = new Image();
+									// theImage = $next.attr("src");
+									theImage = $next.get(0).attr("src");
+									console.log($next);
+									console.log(theImage.width);
+									console.log(theImage.height);
+
 								}
 							});
 						});
@@ -280,8 +287,8 @@
 			}
 		}
 
-		$(function(){
-			console.log(commonDivisor(7,3));
+		$(function () {
+			console.log(commonDivisor(7, 3));
 		})
 
 		function commonDivisor(num1, num2) {
