@@ -68,6 +68,8 @@ span.reference a {
 	display:block;
 	z-index:9999;
 }
+
+/**/
 .hs_area1{
 	border-right:2px solid #fff;
 }
@@ -80,6 +82,8 @@ span.reference a {
 .hs_area3{
 	border-top:2px solid #fff;
 }
+
+/**/
 .hs_area1{
 	width:449px;
 	height:334px;

@@ -69,8 +69,12 @@
             <img class="hs_visible" src="images/area1/1.jpg" alt=""/>
             <img src="images/area1/2.jpg" alt=""/>
             <img src="images/area1/3.jpg" alt=""/>
-            <img src="images/bg-test.png" alt=""/>
-            <img src="images/bg.gif" alt=""/>
+            <img src="images/area2/2.jpg" alt=""/>
+            <img src="images/area2/3.jpg" alt=""/>
+            <img src="images/area1/2.jpg" alt=""/>
+            <img src="images/area1/3.jpg" alt=""/>
+            <img src="images/area2/2.jpg" alt=""/>
+            <img src="images/area2/3.jpg" alt=""/>
         </div>
         <div class="hs_area hs_area2">
             <img class="hs_visible" src="images/area2/1.jpg" alt=""/>
@@ -125,20 +129,15 @@
                         $area.data('over', true).bind('mouseenter', function () {
                             if ($area.data('over')) {
                                 $area.data('over', false);
-                                //how many images in this area?
-                                var total = $area.children().length;
                                 //visible image
                                 var $current = $area.find('img:visible');
-                                //index of visible image
-                                var idx_current = $current.index();
                                 //the next image that's going to be displayed.
                                 //either the next one, or the first one if the current is the last
                                 // var $next = (idx_current == total - 1) ? $area.children(':first') : $current.next();
+
                                 // random the next image that's going to be displayed.
-                                do {
-                                    var inx_floor = Math.floor(Math.random() * total)
-                                } while (inx_floor == idx_current);
-                                var $next = $area.children(':eq(' + inx_floor + ')');
+                                var $next = randomNext($area, $current);
+
                                 //show next one (not yet visible)
                                 $next.show();
                                 //get a random animation
@@ -149,6 +148,10 @@
                                 // console.log($next[0].height);
                                 // console.log($next[0].naturalWidth);
                                 // console.log($next[0].naturalHeight);
+
+                                // console.log(Number($area.css("width").toLowerCase().replace('px', '')));
+                                // console.log($current[0].width + '   ' + $current[0].height);
+
                             }
                         });
                     });
@@ -163,6 +166,18 @@
             }).attr('src', $this.attr('src'));
         });
     });
+
+    // random the next image that's going to be displayed.
+    function randomNext($area, $current) {
+        //how many images in this area?
+        var total = $area.children().length;
+        //index of visible image
+        var idx_current = $current.index();
+        do {
+            var inx_floor = Math.floor(Math.random() * total)
+        } while (inx_floor == idx_current);
+        return $area.children(':eq(' + inx_floor + ')');
+    }
 
 
     //custom animations to use
