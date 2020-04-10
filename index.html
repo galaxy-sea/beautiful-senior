@@ -2,16 +2,41 @@
 <html>
 
 <head>
-    <title>学姐的汉服写真</title>
-
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="description" content="Hover Slide Effect with jQuery"/>
     <meta name="keywords" content="jquery, slide, hover, effect, animation, fancy, entry page, fade in"/>
 
-    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon"/>
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen"/>
 
     <script src="https://cdn.bootcss.com/cufon/1.09i/cufon-yui.min.js" type="text/javascript"></script>
+    <script src="https://cdn.bootcss.com/jquery/1.7.2/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!--  网页title的特效  -->
+    <title>林三碗的漂亮写真</title>
+    <meta name="viewport" content="width=device-width"/>
+    <link rel="shortcut icon" href="./images/favicon.ico">
+    <script>
+        window.onload = function () {
+            var OriginTitile = document.title;
+            var titleTime;
+            document.addEventListener('visibilitychange', function () {
+                if (document.hidden) {
+                    $('[rel="shortcut icon"]').attr('href', "./images/failure.ico");
+                    document.title = '(●—●)喔哟，崩溃啦！';
+                    clearTimeout(titleTime);
+                } else {
+                    $('[rel="shortcut icon"]').attr('href', "./images/favicon.ico");
+                    document.title = '(/≧▽≦/)咦！又好了！' + OriginTitile;
+                    titleTime = setTimeout(function () {
+                        document.title = OriginTitile;
+                    }, 2000);
+                }
+            });
+        }
+    </script>
+    <!--  网页title的特效  -->
+
     <style type="text/css">
         .div-1920-1080 {
             background-color: red;
@@ -74,8 +99,6 @@
 
 
 <!-- The JavaScript -->
-<script src="https://cdn.bootcss.com/jquery/1.7.2/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/jquery-easing/1.3/jquery.easing.min.js"></script>
 <script type="text/javascript">
     $(function () {
         //caching
@@ -122,10 +145,10 @@
                                 randomAnimation($current, $next, $area);
 
                                 // todo 长宽高获取成功
-								console.log($next[0].width);
-								console.log($next[0].height);
-								console.log($next[0].naturalWidth);
-								console.log($next[0].naturalHeight);
+                                // console.log($next[0].width);
+                                // console.log($next[0].height);
+                                // console.log($next[0].naturalWidth);
+                                // console.log($next[0].naturalHeight);
                             }
                         });
                     });
@@ -308,10 +331,6 @@
                 break;
         }
     }
-
-    $(function () {
-        console.log(commonDivisor(7, 3));
-    })
 
     function commonDivisor(num1, num2) {
         if ((num1 - num2) < 0) {
