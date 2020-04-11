@@ -131,6 +131,7 @@
         divAddImg(divMap);
     }
 
+    // todo 需要修改图片加载方式, 使用回调
     function divAddImg(divMap) {
         var set = new Set();
         imgSrcJsonArray.forEach(value => {
@@ -173,112 +174,45 @@
     }
 
 
-    function imgAnimationV2() {
-        //caching
-        var $hs_container = $('#hs_container');
-        var $hs_areas = $hs_container.find('.hs_area');
-
-        //first preload all images
-        $hs_images = $hs_container.find('img');
-        var total_images = $hs_images.length;
-        var cnt = 0;
-        $hs_images.each(function () {
-            var $this = $(this);
-            $('<img/>').load(function () {
-                ++cnt;
-                if (cnt == total_images) {
-                    $hs_areas.each(function () {
-                        var $area = $(this);
-                        //when the mouse enters the area we animate the current
-                        //image (random animation from array animations),
-                        //so that the next one gets visible.
-                        //"over" is a flag indicating if we can animate
-                        //an area or not (we don't want 2 animations
-                        //at the same time for each area)
-                        $area.data('over', true).bind('mouseenter', function () {
-                            if ($area.data('over')) {
-                                $area.data('over', false);
-                                //visible image
-                                var $current = $area.find('img:visible');
-                                //the next image that's going to be displayed.
-                                //either the next one, or the first one if the current is the last
-                                // var $next = (idx_current == total - 1) ? $area.children(':first') : $current.next();
-
-                                // random the next image that's going to be displayed.
-                                var $next = randomNext($area, $current);
-                                if ($next != null) {
-                                    //show next one (not yet visible)
-                                    $next.show();
-                                    //get a random animation
-                                    randomAnimation($current, $next, $area);
-                                }
-                            }
-                        });
-                    });
-
-                    //when clicking the hs_container all areas get slided
-                    //(just for fun...you would probably want to enter the site
-                    //or something similar)
-                    $hs_container.bind('click', function () {
-                        $hs_areas.trigger('mouseenter');
-                    });
-                }
-            }).attr('src', $this.attr('src'));
-        });
-    }
-
-
     function imgAnimation() {
         //caching
         var $hs_container = $('#hs_container');
         var $hs_areas = $hs_container.find('.hs_area');
 
-        //first preload all images
-        $hs_images = $hs_container.find('img');
-        var total_images = $hs_images.length;
-        var cnt = 0;
-        $hs_images.each(function () {
-            var $this = $(this);
-            $('<img/>').load(function () {
-                ++cnt;
-                if (cnt == total_images) {
-                    $hs_areas.each(function () {
-                        var $area = $(this);
-                        //when the mouse enters the area we animate the current
-                        //image (random animation from array animations),
-                        //so that the next one gets visible.
-                        //"over" is a flag indicating if we can animate
-                        //an area or not (we don't want 2 animations
-                        //at the same time for each area)
-                        $area.data('over', true).bind('mouseenter', function () {
-                            if ($area.data('over')) {
-                                $area.data('over', false);
-                                //visible image
-                                var $current = $area.find('img:visible');
-                                //the next image that's going to be displayed.
-                                //either the next one, or the first one if the current is the last
-                                // var $next = (idx_current == total - 1) ? $area.children(':first') : $current.next();
+        $hs_areas.each(function () {
+            var $area = $(this);
+            //when the mouse enters the area we animate the current
+            //image (random animation from array animations),
+            //so that the next one gets visible.
+            //"over" is a flag indicating if we can animate
+            //an area or not (we don't want 2 animations
+            //at the same time for each area)
+            $area.data('over', true).bind('mouseenter', function () {
+                if ($area.data('over')) {
+                    $area.data('over', false);
+                    //visible image
+                    var $current = $area.find('img:visible');
+                    //the next image that's going to be displayed.
+                    //either the next one, or the first one if the current is the last
+                    // var $next = (idx_current == total - 1) ? $area.children(':first') : $current.next();
 
-                                // random the next image that's going to be displayed.
-                                var $next = randomNext($area, $current);
-                                if ($next != null) {
-                                    //show next one (not yet visible)
-                                    $next.show();
-                                    //get a random animation
-                                    randomAnimation($current, $next, $area);
-                                }
-                            }
-                        });
-                    });
-
-                    //when clicking the hs_container all areas get slided
-                    //(just for fun...you would probably want to enter the site
-                    //or something similar)
-                    $hs_container.bind('click', function () {
-                        $hs_areas.trigger('mouseenter');
-                    });
+                    // random the next image that's going to be displayed.
+                    var $next = randomNext($area, $current);
+                    if ($next != null) {
+                        //show next one (not yet visible)
+                        $next.show();
+                        //get a random animation
+                        randomAnimation($current, $next, $area);
+                    }
                 }
-            }).attr('src', $this.attr('src'));
+            });
+        });
+
+        //when clicking the hs_container all areas get slided
+        //(just for fun...you would probably want to enter the site
+        //or something similar)
+        $hs_container.bind('click', function () {
+            $hs_areas.trigger('mouseenter');
         });
     }
 
