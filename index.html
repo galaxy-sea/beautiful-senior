@@ -83,16 +83,10 @@
     ];
 
     $(function () {
-        chaosSequence();
+        var divMap = divChaosSequence();
+        divAddImg(divMap);
         imgAnimation();
     });
-
-
-    function chaosSequence() {
-        var $hs_areas = $('.hs_area');
-        var divMap = divChaosSequence($hs_areas);
-        divAddImg(divMap);
-    }
 
     // todo 需要修改图片加载方式, 使用回调
     function divAddImg(divMap) {
@@ -121,7 +115,8 @@
         });
     }
 
-    function divChaosSequence($hs_areas) {
+    function divChaosSequence() {
+        var $hs_areas = $('.hs_area');
         var divMap = new Map();
         $hs_areas.each(function () {
             var widthAndHeight = $(this).css("width").toLowerCase().replace('px', '') + ':' + $(this).css("height").toLowerCase().replace('px', '');
