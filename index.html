@@ -2,40 +2,19 @@
 <html>
 
 <head>
+    <title>林三碗的漂亮写真</title>
+
+    <meta name="viewport" content="width=device-width"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="description" content="Hover Slide Effect with jQuery"/>
     <meta name="keywords" content="jquery, slide, hover, effect, animation, fancy, entry page, fade in"/>
 
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen"/>
+    <link rel="shortcut icon" href="./images/favicon.ico">
 
     <script src="https://cdn.bootcss.com/cufon/1.09i/cufon-yui.min.js" type="text/javascript"></script>
-    <script src="https://cdn.bootcss.com/jquery/1.7.2/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery-easing/1.3/jquery.easing.min.js"></script>
-
-    <!--  网页title的特效  -->
-    <title>林三碗的漂亮写真</title>
-    <meta name="viewport" content="width=device-width"/>
-    <link rel="shortcut icon" href="./images/favicon.ico">
-    <script>
-        window.onload = function () {
-            var OriginTitile = document.title;
-            var titleTime;
-            document.addEventListener('visibilitychange', function () {
-                if (document.hidden) {
-                    $('[rel="shortcut icon"]').attr('href', "./images/failure.ico");
-                    document.title = '(●—●)喔哟，崩溃啦！';
-                    clearTimeout(titleTime);
-                } else {
-                    $('[rel="shortcut icon"]').attr('href', "./images/favicon.ico");
-                    document.title = '(/≧▽≦/)咦！又好了！' + OriginTitile;
-                    titleTime = setTimeout(function () {
-                        document.title = OriginTitile;
-                    }, 2000);
-                }
-            });
-        }
-    </script>
-    <!--  网页title的特效  -->
+    <script src="https://cdn.bootcss.com/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdn.bootcss.com/jquery-easing/1.3/jquery.easing.min.js" type="text/javascript"></script>
 
     <style type="text/css">
         .div-1920-1080 {
@@ -75,86 +54,105 @@
 
 </div>
 
+<script type="text/javascript">
+    const OriginTitle = document.title;
+    window.onload = function () {
+        let titleTime;
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) {
+                $('[rel="shortcut icon"]').attr('href', "./images/failure.ico");
+                document.title = '(●—●)喔哟，崩溃啦！';
+                clearTimeout(titleTime);
+            } else {
+                $('[rel="shortcut icon"]').attr('href', "./images/favicon.ico");
+                document.title = '(/≧▽≦/)咦！又好了！' + OriginTitle;
+                titleTime = setTimeout(function () {
+                    document.title = OriginTitle;
+                }, 2000);
+            }
+        });
+    }
+</script>
 
 <!-- The JavaScript -->
 <script type="text/javascript">
-    var imgSrcJsonArray = ["images/album/1.jpg", "images/album/2.jpg", "images/album/3.jpg", "images/album/4.jpg", "images/album/5.jpg", "images/album/6.jpg", "images/album/7.jpg", "images/album/8.jpg", "images/album/9.jpg", "images/album/10.jpg",
+    let imgSrcJsonArray = ["images/album/1.jpg", "images/album/2.jpg", "images/album/3.jpg", "images/album/4.jpg", "images/album/5.jpg", "images/album/6.jpg", "images/album/7.jpg", "images/album/8.jpg", "images/album/9.jpg", "images/album/10.jpg",
         "images/album/11.jpg", "images/album/12.jpg", "images/album/13.jpg", "images/album/14.jpg", "images/album/15.jpg", "images/album/16.jpg", "images/album/17.jpg", "1images/album/8.jpg"
     ];
 
     $(function () {
-        var $hs_areas = imgAnimation();
-        var divMap = divChaosSequence($hs_areas);
-        divAddImg(divMap);
+        let $hs_areas = imgBindAnimation();
+        let hs_container_map = hsAreaChaosSequence($hs_areas);
+        divAddImg(hs_container_map);
+        imgSrcJsonArray = null;
     });
 
     // todo 需要修改图片加载方式, 使用回调
-    function divAddImg(divMap) {
-        var set = new Set();
+    function divAddImg(hs_container_map) {
+        let set = new Set();
         imgSrcJsonArray.forEach(value => {
-            var image = new Image();
+            let image = new Image();
             image.src = value;
             image.onload = function () {
-                var widthAndHeight = this.width + ':' + this.height;
-                if (divMap.has(widthAndHeight)) {
-                    var flag = true;
-                    divMap.get(widthAndHeight).forEach($div => {
-                        var $image = $(this);
-                        if (!set.has($div)) {
-                            set.add($div);
+                let widthAndHeight = this.width + ':' + this.height;
+                if (hs_container_map.has(widthAndHeight)) {
+                    let flag = true;
+                    hs_container_map.get(widthAndHeight).forEach($area => {
+                        let $image = $(this);
+                        if (!set.has($area)) {
+                            set.add($area);
                             image.className = 'hs_visible';
                         }
                         if (flag) {
                             $image = $image.clone();
                             flag = false;
                         }
-                        $div.append($image);
+                        $area.append($image);
                     });
                 }
             }
         });
     }
 
-    function divChaosSequence($hs_areas) {
-        var divMap = new Map();
+    function hsAreaChaosSequence($hs_areas) {
+        let hs_container_map = new Map();
         $hs_areas.each(function () {
-            var widthAndHeight = $(this).css("width").toLowerCase().replace('px', '') + ':' + $(this).css("height").toLowerCase().replace('px', '');
-            var array = new Array();
-            if (divMap.has(widthAndHeight)) {
-                array = divMap.get(widthAndHeight);
+            let widthAndHeight = $(this).css("width").toLowerCase().replace('px', '') + ':' + $(this).css("height").toLowerCase().replace('px', '');
+            let hs_area_array = new Array();
+            if (hs_container_map.has(widthAndHeight)) {
+                hs_area_array = hs_container_map.get(widthAndHeight);
             } else {
-                divMap.set(widthAndHeight, array);
+                hs_container_map.set(widthAndHeight, hs_area_array);
             }
-            array.push($(this));
+            hs_area_array.push($(this));
         });
-        return divMap;
+        return hs_container_map;
     }
 
 
-    function imgAnimation() {
+    function imgBindAnimation() {
         //caching
-        var $hs_container = $('#hs_container');
-        var $hs_areas = $hs_container.find('.hs_area');
+        let $hs_container = $('#hs_container');
+        let $hs_areas = $hs_container.find('.hs_area');
 
         $hs_areas.each(function () {
-            var $area = $(this);
+            let $area = $(this);
             //when the mouse enters the area we animate the current
             //image (random animation from array animations),
             //so that the next one gets visible.
             //"over" is a flag indicating if we can animate
             //an area or not (we don't want 2 animations
             //at the same time for each area)
-            $area.data('over', true)
             $area.data('over', true).bind('mouseenter', function () {
                 if ($area.data('over')) {
                     //visible image
-                    var $current = $area.find('img:visible');
+                    let $current = $area.find('img:visible');
                     //the next image that's going to be displayed.
                     //either the next one, or the first one if the current is the last
                     // var $next = (idx_current == total - 1) ? $area.children(':first') : $current.next();
 
                     // random the next image that's going to be displayed.
-                    var $next = randomNext($area, $current);
+                    let $next = randomNext($area, $current);
                     if ($next != null) {
                         $area.data('over', false);
                         //show next one (not yet visible)
@@ -179,14 +177,15 @@
     // random the next image that's going to be displayed.
     function randomNext($area, $current) {
         //how many images in this area?
-        var total = $area.children().length;
+        let total = $area.children().length;
         if (total <= 1) {
             return null;
         }
         //index of visible image
-        var idx_current = $current.index();
+        let idx_current = $current.index();
+        let inx_floor
         do {
-            var inx_floor = Math.floor(Math.random() * total)
+            inx_floor = Math.floor(Math.random() * total);
         } while (inx_floor == idx_current);
         return $area.children(':eq(' + inx_floor + ')');
     }
@@ -194,17 +193,17 @@
 
     //custom animations to use
     //in the transitions
-    var animations = ['right', 'left', 'top', 'bottom', 'rightFade', 'leftFade', 'topFade', 'bottomFade'];
-    var total_anim = animations.length;
+    const animations = ['right', 'left', 'top', 'bottom', 'rightFade', 'leftFade', 'topFade', 'bottomFade'];
+    const total_anim = animations.length;
     //just change this to one of your choice
-    var easeType = 'swing';
+    const easeType = 'swing';
 
     //the speed of each transition
-    var animSpeed = 450;
+    const animSpeed = 450;
 
     //random animation
     function randomAnimation($current, $next, $area) {
-        var anim = animations[Math.floor(Math.random() * total_anim)];
+        let anim = animations[Math.floor(Math.random() * total_anim)];
         switch (anim) {
             //current slides out from the right
             case 'right':
