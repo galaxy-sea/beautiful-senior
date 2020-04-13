@@ -87,17 +87,16 @@
         imgSrcJsonArray = null;
     });
 
-    // todo 需要修改图片加载方式, 使用回调
     function divAddImg(hs_container_map) {
         let set = new Set();
         imgSrcJsonArray.forEach(value => {
             let image = new Image();
             image.src = value;
             image.onload = function () {
-                let widthAndHeight = this.width + ':' + this.height;
-                if (hs_container_map.has(widthAndHeight)) {
+                let width_and_height = widthAndHeight(this.width, this.height);
+                if (hs_container_map.has(width_and_height)) {
                     let flag = true;
-                    hs_container_map.get(widthAndHeight).forEach($area => {
+                    hs_container_map.get(width_and_height).forEach($area => {
                         let $image = $(this);
                         if (!set.has($area)) {
                             set.add($area);
@@ -117,12 +116,12 @@
     function hsAreaChaosSequence($hs_areas) {
         let hs_container_map = new Map();
         $hs_areas.each(function () {
-            let widthAndHeight = $(this).css("width").toLowerCase().replace('px', '') + ':' + $(this).css("height").toLowerCase().replace('px', '');
+            let width_and_height = widthAndHeight(Number($(this).css("width").toLowerCase().replace('px', '')), Number($(this).css("height").toLowerCase().replace('px', '')));
             let hs_area_array = new Array();
-            if (hs_container_map.has(widthAndHeight)) {
-                hs_area_array = hs_container_map.get(widthAndHeight);
+            if (hs_container_map.has(width_and_height)) {
+                hs_area_array = hs_container_map.get(width_and_height);
             } else {
-                hs_container_map.set(widthAndHeight, hs_area_array);
+                hs_container_map.set(width_and_height, hs_area_array);
             }
             hs_area_array.push($(this));
         });
@@ -356,6 +355,11 @@
                     });
                 break;
         }
+    }
+
+    function widthAndHeight(width, height) {
+        let number = commonDivisor(width, height);
+        return (width / number) + ":" + (height / number);
     }
 
     function commonDivisor(num1, num2) {
