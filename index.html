@@ -144,6 +144,7 @@
             //at the same time for each area)
             $area.data('over', true).bind('mouseenter', function () {
                 if ($area.data('over')) {
+                    $area.data('over', false);
                     //visible image
                     let $current = $area.find('img:visible');
                     //the next image that's going to be displayed.
@@ -153,11 +154,12 @@
                     // random the next image that's going to be displayed.
                     let $next = randomNext($area, $current);
                     if ($next != null) {
-                        $area.data('over', false);
                         //show next one (not yet visible)
                         $next.show();
                         //get a random animation
                         randomAnimation($current, $next, $area);
+                    }else {
+                        $area.data('over', true);
                     }
                 }
             });
@@ -197,8 +199,8 @@
     //just change this to one of your choice
     const easeType = 'swing';
 
-    //the speed of each transition
-    const animSpeed = 450;
+    //the speed of default each transition
+    let animSpeed = 450;
 
     //random animation
     function randomAnimation($current, $next, $area) {
