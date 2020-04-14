@@ -117,15 +117,11 @@
         });
     }
 
-    // 100 -170 之间
     function hsAreaChaosSequence($hs_areas) {
         let hs_container_map = new Map();
         $hs_areas.each(function () {
             let $hs_area = $(this);
-            $hs_area.css("width", "340px");
-            $hs_area.css("height", "510px");
             let width_and_height = widthAndHeight(Number($hs_area.css("width").toLowerCase().replace('px', '')), Number($hs_area.css("height").toLowerCase().replace('px', '')));
-            console.log(width_and_height);
             let hs_area_array = new Array();
             if (hs_container_map.has(width_and_height)) {
                 hs_area_array = hs_container_map.get(width_and_height);
