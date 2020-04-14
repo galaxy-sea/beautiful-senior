@@ -77,7 +77,10 @@
 <!-- The JavaScript -->
 <script type="text/javascript">
     let imgSrcJsonArray = ["images/album/1.jpg", "images/album/2.jpg", "images/album/3.jpg", "images/album/4.jpg", "images/album/5.jpg", "images/album/6.jpg", "images/album/7.jpg", "images/album/8.jpg", "images/album/9.jpg", "images/album/10.jpg",
-        "images/album/11.jpg", "images/album/12.jpg", "images/album/13.jpg", "images/album/14.jpg", "images/album/15.jpg", "images/album/16.jpg", "images/album/17.jpg", "1images/album/8.jpg"
+        "images/album/11.jpg", "images/album/12.jpg", "images/album/13.jpg", "images/album/14.jpg", "images/album/15.jpg", "images/album/16.jpg", "images/album/17.jpg", "1images/album/8.jpg",
+        "images/2020-4/a1.jpg", "images/2020-4/a2.jpg", "images/2020-4/a3.jpg", "images/2020-4/a4.jpg", "images/2020-4/a5.jpg", "images/2020-4/a6.jpg", "images/2020-4/a7.jpg", "images/2020-4/a8.jpg", "images/2020-4/a9.jpg",
+        "images/2020-4/a10.jpg", "images/2020-4/a11.jpg", "images/2020-4/a12.jpg", "images/2020-4/a13.jpg", "images/2020-4/a14.jpg", "images/2020-4/a15.jpg", "images/2020-4/a16.jpg", "images/2020-4/a17.jpg", "images/2020-4/a18.jpg", "images/2020-4/a9.jpg",
+        "images/2020-4/a20.jpg", "images/2020-4/a21.jpg", "images/2020-4/a22.jpg", "images/2020-4/a23.jpg", "images/2020-4/a24.jpg", "images/2020-4/a25.jpg",
     ];
 
     $(function () {
@@ -114,17 +117,22 @@
         });
     }
 
+    // 100 -170 之间
     function hsAreaChaosSequence($hs_areas) {
         let hs_container_map = new Map();
         $hs_areas.each(function () {
-            let width_and_height = widthAndHeight(Number($(this).css("width").toLowerCase().replace('px', '')), Number($(this).css("height").toLowerCase().replace('px', '')));
+            let $hs_area = $(this);
+            $hs_area.css("width", "340px");
+            $hs_area.css("height", "510px");
+            let width_and_height = widthAndHeight(Number($hs_area.css("width").toLowerCase().replace('px', '')), Number($hs_area.css("height").toLowerCase().replace('px', '')));
+            console.log(width_and_height);
             let hs_area_array = new Array();
             if (hs_container_map.has(width_and_height)) {
                 hs_area_array = hs_container_map.get(width_and_height);
             } else {
                 hs_container_map.set(width_and_height, hs_area_array);
             }
-            hs_area_array.push($(this));
+            hs_area_array.push($hs_area);
         });
         return hs_container_map;
     }
