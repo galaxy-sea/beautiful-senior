@@ -157,8 +157,8 @@
                         //show next one (not yet visible)
                         $next.show();
                         //get a random animation
-                        randomAnimation($current, $next, $area);
-                    }else {
+                        animations[Math.floor(Math.random() * total_anim)].call(null, $current, $next, $area);
+                    } else {
                         $area.data('over', true);
                     }
                 }
@@ -193,8 +193,144 @@
 
 
     //custom animations to use
-    //in the transitions
-    const animations = ['right', 'left', 'top', 'bottom', 'rightFade', 'leftFade', 'topFade', 'bottomFade'];
+    const animations = [
+        //current slides out from the right
+        function ($current, $next, $area) {
+            $current.animate({
+                    'left': $current.width() + 'px'
+                },
+                animSpeed,
+                easeType,
+                function () {
+                    $current.hide().css({
+                        'z-index': '1',
+                        'left': '0px'
+                    });
+                    $next.css('z-index', '9999');
+                    $area.data('over', true);
+                });
+
+        },
+        //current slides out from the left
+        function ($current, $next, $area) {
+            $current.animate({
+                    'left': -$current.width() + 'px'
+                },
+                animSpeed,
+                easeType,
+                function () {
+                    $current.hide().css({
+                        'z-index': '1',
+                        'left': '0px'
+                    });
+                    $next.css('z-index', '9999');
+                    $area.data('over', true);
+                });
+        },
+        //current slides out from the top
+        function ($current, $next, $area) {
+            $current.animate({
+                    'top': -$current.height() + 'px'
+                },
+                animSpeed,
+                easeType,
+                function () {
+                    $current.hide().css({
+                        'z-index': '1',
+                        'top': '0px'
+                    });
+                    $next.css('z-index', '9999');
+                    $area.data('over', true);
+                });
+        },
+        //current slides out from the bottom
+        function ($current, $next, $area) {
+            $current.animate({
+                    'top': $current.height() + 'px'
+                },
+                animSpeed,
+                easeType,
+                function () {
+                    $current.hide().css({
+                        'z-index': '1',
+                        'top': '0px'
+                    });
+                    $next.css('z-index', '9999');
+                    $area.data('over', true);
+                });
+        },
+        //current slides out from the right	and fades out
+        function ($current, $next, $area) {
+            $current.animate({
+                    'left': $current.width() + 'px',
+                    'opacity': '0'
+                },
+                animSpeed,
+                easeType,
+                function () {
+                    $current.hide().css({
+                        'z-index': '1',
+                        'left': '0px',
+                        'opacity': '1'
+                    });
+                    $next.css('z-index', '9999');
+                    $area.data('over', true);
+                });
+        },
+        //current slides out from the left and fades out
+        function ($current, $next, $area) {
+            $current.animate({
+                    'left': -$current.width() + 'px', 'opacity': '0'
+                },
+                animSpeed,
+                easeType,
+                function () {
+                    $current.hide().css({
+                        'z-index': '1',
+                        'left': '0px',
+                        'opacity': '1'
+                    });
+                    $next.css('z-index', '9999');
+                    $area.data('over', true);
+                });
+        },
+        //current slides out from the top and fades out
+        function ($current, $next, $area) {
+            $current.animate({
+                    'top': -$current.height() + 'px',
+                    'opacity': '0'
+                },
+                animSpeed,
+                easeType,
+                function () {
+                    $current.hide().css({
+                        'z-index': '1',
+                        'top': '0px',
+                        'opacity': '1'
+                    });
+                    $next.css('z-index', '9999');
+                    $area.data('over', true);
+                });
+        },
+        //current slides out from the bottom and fades out
+        function ($current, $next, $area) {
+            $current.animate({
+                    'top': $current.height() + 'px',
+                    'opacity': '0'
+                },
+                animSpeed,
+                easeType,
+                function () {
+                    $current.hide().css({
+                        'z-index': '1',
+                        'top': '0px',
+                        'opacity': '1'
+                    });
+                    $next.css('z-index', '9999');
+                    $area.data('over', true);
+                });
+        }];
+
     const total_anim = animations.length;
     //just change this to one of your choice
     const easeType = 'swing';
@@ -202,162 +338,6 @@
     //the speed of default each transition
     let animSpeed = 450;
 
-    //random animation
-    function randomAnimation($current, $next, $area) {
-        let anim = animations[Math.floor(Math.random() * total_anim)];
-        switch (anim) {
-            //current slides out from the right
-            case 'right':
-                $current.animate({
-                        'left': $current.width() + 'px'
-                    },
-                    animSpeed,
-                    easeType,
-                    function () {
-                        $current.hide().css({
-                            'z-index': '1',
-                            'left': '0px'
-                        });
-                        $next.css('z-index', '9999');
-                        $area.data('over', true);
-                    });
-                break;
-            //current slides out from the left
-            case 'left':
-                $current.animate({
-                        'left': -$current.width() + 'px'
-                    },
-                    animSpeed,
-                    easeType,
-                    function () {
-                        $current.hide().css({
-                            'z-index': '1',
-                            'left': '0px'
-                        });
-                        $next.css('z-index', '9999');
-                        $area.data('over', true);
-                    });
-                break;
-            //current slides out from the top
-            case 'top':
-                $current.animate({
-                        'top': -$current.height() + 'px'
-                    },
-                    animSpeed,
-                    easeType,
-                    function () {
-                        $current.hide().css({
-                            'z-index': '1',
-                            'top': '0px'
-                        });
-                        $next.css('z-index', '9999');
-                        $area.data('over', true);
-                    });
-                break;
-            //current slides out from the bottom
-            case 'bottom':
-                $current.animate({
-                        'top': $current.height() + 'px'
-                    },
-                    animSpeed,
-                    easeType,
-                    function () {
-                        $current.hide().css({
-                            'z-index': '1',
-                            'top': '0px'
-                        });
-                        $next.css('z-index', '9999');
-                        $area.data('over', true);
-                    });
-                break;
-            //current slides out from the right	and fades out
-            case 'rightFade':
-                $current.animate({
-                        'left': $current.width() + 'px',
-                        'opacity': '0'
-                    },
-                    animSpeed,
-                    easeType,
-                    function () {
-                        $current.hide().css({
-                            'z-index': '1',
-                            'left': '0px',
-                            'opacity': '1'
-                        });
-                        $next.css('z-index', '9999');
-                        $area.data('over', true);
-                    });
-                break;
-            //current slides out from the left and fades out
-            case 'leftFade':
-                $current.animate({
-                        'left': -$current.width() + 'px', 'opacity': '0'
-                    },
-                    animSpeed,
-                    easeType,
-                    function () {
-                        $current.hide().css({
-                            'z-index': '1',
-                            'left': '0px',
-                            'opacity': '1'
-                        });
-                        $next.css('z-index', '9999');
-                        $area.data('over', true);
-                    });
-                break;
-            //current slides out from the top and fades out
-            case 'topFade':
-                $current.animate({
-                        'top': -$current.height() + 'px',
-                        'opacity': '0'
-                    },
-                    animSpeed,
-                    easeType,
-                    function () {
-                        $current.hide().css({
-                            'z-index': '1',
-                            'top': '0px',
-                            'opacity': '1'
-                        });
-                        $next.css('z-index', '9999');
-                        $area.data('over', true);
-                    });
-                break;
-            //current slides out from the bottom and fades out
-            case 'bottomFade':
-                $current.animate({
-                        'top': $current.height() + 'px',
-                        'opacity': '0'
-                    },
-                    animSpeed,
-                    easeType,
-                    function () {
-                        $current.hide().css({
-                            'z-index': '1',
-                            'top': '0px',
-                            'opacity': '1'
-                        });
-                        $next.css('z-index', '9999');
-                        $area.data('over', true);
-                    });
-                break;
-            default:
-                $current.animate({
-                        'left': -$current.width() + 'px'
-                    },
-                    animSpeed,
-                    easeType,
-                    function () {
-                        $current.hide().css({
-                            'z-index': '1',
-                            'left': '0px'
-                        });
-                        $next.css('z-index', '9999');
-                        $area.data('over', true);
-                    });
-                break;
-        }
-    }
 
     function widthAndHeight(width, height) {
         let number = commonDivisor(width, height);
