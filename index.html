@@ -81,13 +81,14 @@
     ];
 
     $(function () {
-        let $hs_areas = imgBindAnimation();
+        let $hs_container = $('#hs_container');
+        let $hs_areas = hsAreasBindAnimation($hs_container);
         let hs_container_map = hsAreaChaosSequence($hs_areas);
-        divAddImg(hs_container_map);
+        hsAreasAddImg(hs_container_map);
         imgSrcJsonArray = null;
     });
 
-    function divAddImg(hs_container_map) {
+    function hsAreasAddImg(hs_container_map) {
         let set = new Set();
         imgSrcJsonArray.forEach(value => {
             let image = new Image();
@@ -129,9 +130,8 @@
     }
 
 
-    function imgBindAnimation() {
-        //caching
-        let $hs_container = $('#hs_container');
+    function hsAreasBindAnimation($hs_container) {
+
         let $hs_areas = $hs_container.find('.hs_area');
 
         $hs_areas.each(function () {
